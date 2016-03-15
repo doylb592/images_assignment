@@ -1,45 +1,86 @@
-//================================
-//	view your project using anvil at:
-//	http://images.dev
-//
-// or after you upload it to github at:
-//	http://yourusername.github.io/images/
-//================================
+var london;
 
-//STEP 1: Declare global variables for your images and upload button
+var hk;
+var bm;
+var kp;
+var mm;
+
+var blurbm
+var blurkp
+var blurmm
+
+var uploadButton;
+var uploadedImage;
 
 function preload(){
-	//STEP 2:
-	// Load your image with loadImage("path/to/image.jpg")
-	//and save it to your global variable:
+  london = loadImage("images/london.png");
+  hk = loadImage("images/hello_kitty.png");
+  bm = loadImage("images/badtz_maru.png");
+  kp = loadImage("images/kp.png");
+  mm = loadImage("images/My_Melody.png")
 
-
+  blurbm = loadImage("images/BLURbadtz_maru.png");
+  blurkp = loadImage("images/BLURkp.png");
+  blurmm = loadImage("/images/BLURMy_Melody.png");
 }
+function setup(){
 
-function setup() {
+  //upload button
+  uploadButton = createFileInput(imageUploaded);
 
-	//STEP 3
-	//add a file upload button with CreateFileInput(_____);
+  createCanvas(london.width,london.height);
+  noCursor();
 
-	//STEP 4:
-  //set up your canvas with createCanvas(__,__);
-
+  //filters
+  blurbm.filter(BLUR,3);
+  blurkp.filter(BLUR,3);
+  blurmm.filter(BLUR,3);
 }
-
-function draw() {
-
-	//STEP 5:
-	//draw your images with image(imagevariable);
-
-	//STEP 7:
-	//You're also going to need an if statement here to check
-	//if the image the user uploaded exists to then draw it
-	//(see image upload example version 2)
-
+function imageUploaded(file){
+  uploadedImage = loadImage(file.data);
 }
+function draw(){
+  if (uploadedImage){
+    background(uploadedImage,0,0,london.width,london.height);
+  }
+  else {
+    background(london,0,0,london.width,london.height);
+  }
+  //character icons
+  image(blurbm,10,100);
+  image(blurkp,80,100);
+  image(blurmm,150,100);
 
-//STEP 6:
-//create a callback function (you can name it anything you'd like)
-//which will be called when the user uploads an image:
+  //text
+  fill(0);
+  noStroke();
+  textSize(20);
+  text('Help Hello Kitty find her friends!', 25, 40);
+  text('Click to find Badtz-Maru, Keroppi & My Melody!', 25, 80);
+  text('Upload a picture to explore your city!', 25, 200);
 
-	//and inside it you will need to save the loaded image to a global variable
+  //mouse + hk
+  imageMode(CENTER);
+  image(hk,mouseX,mouseY);
+
+  //hk friends
+     if(mouseIsPressed){
+
+       if(mouseY > height/2){
+
+         if(mouseX > width/2){
+           image(bm,200,570);
+         }
+         else{
+           image(mm,600,520);
+         }
+       }
+
+       else {
+         if(mouseX > width/2){
+         } else{
+           image(kp,600,40);
+         }
+       }
+    }
+}
